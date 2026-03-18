@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สภานักเรียน อิบตีดาวิทยา</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f0f4ff;--sf:#fff;--s2:#f7f9ff;--p:#3b6bff;--pl:#6e8fff;--ac:#00d4b4;--ac2:#ff6b9d;--tx:#1a1f3a;--tm:#6b7299;--bd:rgba(59,107,255,.12);--r:18px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Sarabun',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 80% 60% at 10% 10%,rgba(59,107,255,.08) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 50% at 90% 80%,rgba(0,212,180,.07) 0%,transparent 60%),
+  radial-gradient(ellipse 50% 40% at 50% 50%,rgba(255,107,157,.05) 0%,transparent 60%);}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:300;background:rgba(240,244,255,.95);backdrop-filter:blur(18px);border-bottom:1px solid var(--bd);padding:0 1.2rem;}
+.nav-in{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;height:58px;gap:.5rem;}
+.nav-logo{font-family:'Kanit',sans-serif;font-weight:700;font-size:.95rem;color:var(--p);display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0;}
+.dot{width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--p));box-shadow:0 0 8px var(--ac);animation:pulse 2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3);opacity:.7}}
+.nav-links{display:flex;gap:.8rem;list-style:none;align-items:center;}
+.nav-links a{text-decoration:none;font-size:.85rem;font-weight:500;color:var(--tm);cursor:pointer;white-space:nowrap;transition:color .2s;}
+.nav-links a:hover{color:var(--p);}
+.btn-adm{background:linear-gradient(135deg,var(--p),#6e40ff)!important;color:#fff!important;border-radius:9px;padding:6px 14px!important;font-weight:600!important;font-size:.8rem!important;box-shadow:0 2px 10px rgba(59,107,255,.3);}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:transparent;flex-shrink:0;}
+.ham span{display:block;width:22px;height:2px;background:var(--p);border-radius:2px;transition:all .3s;}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.ham.open span:nth-child(2){opacity:0;}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mob-menu{display:none;position:fixed;top:58px;left:0;right:0;background:rgba(240,244,255,.98);backdrop-filter:blur(18px);border-bottom:1px solid var(--bd);padding:1rem 1.5rem;flex-direction:column;gap:.1rem;z-index:299;box-shadow:0 8px 24px rgba(59,107,255,.1);}
+.mob-menu.open{display:flex;}
+.mob-menu a{padding:.75rem 0;font-size:.95rem;font-weight:500;color:var(--tm);text-decoration:none;border-bottom:1px solid var(--bd);cursor:pointer;transition:color .2s;}
+.mob-menu a:last-child{border:none;}
+.mob-adm{background:linear-gradient(135deg,var(--p),#6e40ff)!important;color:#fff!important;border-radius:10px;padding:.75rem 1rem!important;text-align:center;font-weight:600!important;margin-top:.4rem;}
+
+/* ── HERO ── */
+.hero{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:4rem 1.5rem 3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;font-weight:600;letter-spacing:.08em;color:var(--ac);background:rgba(0,212,180,.1);border:1px solid rgba(0,212,180,.25);border-radius:99px;padding:5px 14px;margin-bottom:1.2rem;}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ac);animation:pulse 1.5s infinite;}
+.hero h1{font-family:'Kanit',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;line-height:1.2;margin-bottom:1rem;}
+.hero h1 span{background:linear-gradient(135deg,var(--p),var(--ac));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-desc{color:var(--tm);line-height:1.8;font-size:.93rem;margin-bottom:1.8rem;}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.btn-p{background:linear-gradient(135deg,var(--p),#6e40ff);color:#fff;border:none;border-radius:11px;padding:11px 22px;font-size:.92rem;font-weight:600;font-family:'Sarabun',sans-serif;cursor:pointer;box-shadow:0 4px 18px rgba(59,107,255,.35);transition:all .25s;}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(59,107,255,.45);}
+.btn-o{background:transparent;border:1.5px solid var(--bd);color:var(--tx);border-radius:11px;padding:11px 22px;font-size:.92rem;font-weight:500;font-family:'Sarabun',sans-serif;cursor:pointer;transition:all .25s;}
+.btn-o:hover{border-color:var(--p);color:var(--p);}
+.hero-vis{position:relative;display:flex;justify-content:center;}
+.hcard{background:var(--sf);border-radius:var(--r);border:1px solid var(--bd);padding:1.4rem;box-shadow:0 8px 40px rgba(59,107,255,.1);width:260px;animation:floatY 4s ease-in-out infinite;}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hc-av{width:54px;height:54px;border-radius:50%;object-fit:cover;margin-bottom:10px;box-shadow:0 4px 14px rgba(59,107,255,.2);display:block;}
+.hc-ple{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:10px;box-shadow:0 4px 14px rgba(59,107,255,.2);}
+.hcard h3{font-family:'Kanit',sans-serif;font-size:.95rem;font-weight:600;}
+.hcard p{font-size:.8rem;color:var(--tm);margin:2px 0 10px;}
+.hc-badge{display:inline-block;font-size:.7rem;font-weight:600;padding:3px 10px;border-radius:99px;background:rgba(0,212,180,.12);color:var(--ac);border:1px solid rgba(0,212,180,.25);}
+.hcard2{position:absolute;top:55px;right:-25px;background:var(--sf);border-radius:var(--r);border:1px solid var(--bd);padding:1rem;box-shadow:0 8px 30px rgba(59,107,255,.1);width:175px;animation:floatY 4s ease-in-out 1s infinite;}
+.hc2s{font-family:'Kanit',sans-serif;font-size:1.5rem;font-weight:700;color:var(--p);}
+.hc2l{font-size:.74rem;color:var(--tm);}
+
+/* ── LOADING ── */
+#loadingBar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--p),var(--ac));z-index:9999;transition:width .3s;width:0;}
+.skeleton{background:linear-gradient(90deg,#e8eeff 25%,#f4f6ff 50%,#e8eeff 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:8px;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── COLLAPSIBLE ── */
+.cs{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 1.2rem;}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-radius:var(--r);background:var(--sf);border:1px solid var(--bd);cursor:pointer;margin:.7rem 0;box-shadow:0 2px 12px rgba(59,107,255,.05);transition:all .25s;user-select:none;}
+.ch:hover{box-shadow:0 6px 24px rgba(59,107,255,.12);border-color:var(--pl);}
+.ch-l{display:flex;align-items:center;gap:12px;}
+.cico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.ci1{background:linear-gradient(135deg,rgba(59,107,255,.15),rgba(110,64,255,.15));}
+.ci2{background:linear-gradient(135deg,rgba(255,107,157,.15),rgba(255,159,67,.15));}
+.ci3{background:linear-gradient(135deg,rgba(0,212,180,.15),rgba(0,184,148,.15));}
+.ci4{background:linear-gradient(135deg,rgba(253,203,110,.2),rgba(225,112,85,.15));}
+.ct{font-family:'Kanit',sans-serif;font-size:.98rem;font-weight:700;}
+.csub{font-size:.74rem;color:var(--tm);margin-top:1px;}
+.ch-r{display:flex;align-items:center;gap:8px;}
+.ccnt{font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:99px;background:rgba(59,107,255,.08);color:var(--p);border:1px solid var(--bd);}
+.carr{font-size:.9rem;color:var(--tm);transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.ch.open .carr{transform:rotate(180deg);}
+.cbody{overflow:hidden;max-height:0;transition:max-height .45s cubic-bezier(.16,1,.3,1);}
+.cbody.open{max-height:5000px;}
+.cbi{padding:0 0 1.5rem;}
+.sdiv{max-width:1100px;margin:0 auto;padding:0 1.2rem;}
+.sdiv hr{border:none;border-top:1px solid var(--bd);}
+
+/* ── MEMBERS ── */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.9rem;}
+.mcard{background:var(--sf);border-radius:var(--r);border:1px solid var(--bd);padding:1.3rem;text-align:center;transition:all .3s;cursor:pointer;}
+.mcard:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(59,107,255,.14);border-color:var(--pl);}
+.mav{width:68px;height:68px;border-radius:50%;margin:0 auto 9px;object-fit:cover;display:block;box-shadow:0 4px 14px rgba(59,107,255,.2);}
+.mav-p{width:68px;height:68px;border-radius:50%;margin:0 auto 9px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;box-shadow:0 4px 14px rgba(59,107,255,.2);}
+.mname{font-family:'Kanit',sans-serif;font-size:.88rem;font-weight:600;margin-bottom:2px;}
+.mrole{font-size:.72rem;color:var(--p);font-weight:600;margin-bottom:4px;}
+.mcls{display:inline-block;font-size:.67rem;padding:2px 8px;background:var(--s2);border-radius:99px;color:var(--tm);border:1px solid var(--bd);margin-bottom:8px;}
+.mcon{display:flex;justify-content:center;gap:7px;}
+.cbtn{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .2s;border:1.5px solid var(--bd);background:var(--s2);}
+.cbtn svg{width:15px;height:15px;}
+.cbtn.ig:hover{background:#e1306c;border-color:#e1306c;}.cbtn.ig:hover svg *{stroke:#fff!important;fill:none!important;}
+.cbtn.ln:hover{background:#06c755;border-color:#06c755;}.cbtn.ln:hover svg path{fill:#fff!important;}
+
+/* ── NEWS / PROJ ── */
+.ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:.9rem;}
+.ncard{background:var(--sf);border-radius:var(--r);border:1px solid var(--bd);overflow:hidden;transition:all .3s;cursor:pointer;}
+.ncard:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(59,107,255,.12);}
+.nthumb{height:120px;display:flex;align-items:center;justify-content:center;font-size:2.3rem;position:relative;overflow:hidden;}
+.nthumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.nthumb .ne{position:relative;}
+.nbody{padding:1rem;}
+.nmeta{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.ntag{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:99px;}
+.te{background:rgba(59,107,255,.1);color:var(--p);}
+.tn{background:rgba(0,212,180,.1);color:var(--ac);}
+.ta{background:rgba(255,107,157,.1);color:var(--ac2);}
+.ndt{font-size:.68rem;color:var(--tm);}
+.ncard h3{font-family:'Kanit',sans-serif;font-size:.88rem;font-weight:600;margin-bottom:4px;line-height:1.35;}
+.ncard p{font-size:.77rem;color:var(--tm);line-height:1.55;}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9rem;}
+.pcard{background:var(--sf);border-radius:var(--r);border:1px solid var(--bd);overflow:hidden;transition:all .3s;cursor:pointer;position:relative;}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--p),var(--ac));}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(59,107,255,.12);}
+.pthumb{height:100px;display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative;overflow:hidden;}
+.pthumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.pthumb .pe{position:relative;}
+.pbody{padding:1rem;}
+.pcard h3{font-family:'Kanit',sans-serif;font-size:.87rem;font-weight:600;margin-bottom:3px;}
+.pcard p{font-size:.76rem;color:var(--tm);line-height:1.55;margin-bottom:7px;}
+.pst{display:inline-flex;align-items:center;gap:4px;font-size:.67rem;font-weight:600;padding:2px 8px;border-radius:99px;}
+.sd{width:5px;height:5px;border-radius:50%;background:currentColor;animation:pulse 1.5s infinite;}
+.ps-d{background:rgba(0,212,180,.1);color:var(--ac);}
+.ps-g{background:rgba(59,107,255,.1);color:var(--p);}
+
+/* ── FEEDBACK ── */
+.fwrap{max-width:540px;margin:0 auto;background:var(--sf);border-radius:var(--r);border:1px solid var(--bd);padding:1.8rem;box-shadow:0 4px 24px rgba(59,107,255,.08);}
+.fwrap h3{font-family:'Kanit',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.3rem;}
+.fsub{font-size:.82rem;color:var(--tm);margin-bottom:1.2rem;}
+.fg{margin-bottom:.8rem;}
+.fg label{display:block;font-size:.77rem;font-weight:600;margin-bottom:4px;}
+.fg input,.fg textarea,.fg select{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--bd);background:var(--s2);font-family:'Sarabun',sans-serif;font-size:.88rem;color:var(--tx);outline:none;transition:border-color .2s;resize:vertical;}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(59,107,255,.1);}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+.uparea{border:2px dashed var(--bd);border-radius:10px;padding:.8rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--s2);font-size:.8rem;color:var(--tm);}
+.uparea:hover{border-color:var(--p);background:rgba(59,107,255,.04);}
+.fb-ok{display:none;text-align:center;padding:1.5rem;color:var(--ac);font-weight:600;}
+
+/* ── DETAIL MODAL ── */
+.dmbg{display:none;position:fixed;inset:0;z-index:800;background:rgba(10,14,35,.6);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem;}
+.dmbg.open{display:flex;}
+.dmbox{background:var(--sf);border-radius:var(--r);width:min(600px,96vw);max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(10,14,35,.25);animation:mIn .25s cubic-bezier(.16,1,.3,1);}
+@keyframes mIn{from{opacity:0;transform:scale(.93)}to{opacity:1;transform:scale(1)}}
+.dm-img{width:100%;height:220px;object-fit:cover;border-radius:var(--r) var(--r) 0 0;}
+.dm-imgph{width:100%;height:160px;border-radius:var(--r) var(--r) 0 0;display:flex;align-items:center;justify-content:center;font-size:3.5rem;}
+.dm-body{padding:1.6rem;}
+.dm-close{float:right;background:var(--s2);border:1px solid var(--bd);width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;}
+.dm-close:hover{background:var(--ac2);color:#fff;border-color:var(--ac2);}
+.dm-title{font-family:'Kanit',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:.5rem;line-height:1.3;}
+.dm-desc{font-size:.88rem;color:var(--tm);line-height:1.8;}
+
+/* ── LOGIN MODAL ── */
+.lmbg{display:none;position:fixed;inset:0;z-index:1000;background:rgba(10,14,35,.55);backdrop-filter:blur(6px);align-items:center;justify-content:center;}
+.lmbg.open{display:flex;}
+.lbox{background:var(--sf);border-radius:20px;padding:2.2rem;width:min(350px,92vw);box-shadow:0 20px 60px rgba(10,14,35,.25);animation:mIn .25s cubic-bezier(.16,1,.3,1);text-align:center;}
+.lbox .lk{font-size:2.2rem;margin-bottom:.7rem;}
+.lbox h3{font-family:'Kanit',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.3rem;}
+.lsub{font-size:.8rem;color:var(--tm);margin-bottom:1.2rem;}
+.lerr{font-size:.77rem;color:var(--ac2);margin-top:.4rem;display:none;}
+.btn-o2{background:var(--s2);border:1px solid var(--bd);color:var(--tm);border-radius:9px;padding:9px;font-size:.86rem;font-weight:600;font-family:'Sarabun',sans-serif;cursor:pointer;width:100%;margin-top:.4rem;}
+
+/* ── ADMIN PAGE (fullscreen) ── */
+#adminPage{display:none;position:fixed;inset:0;z-index:500;background:var(--bg);overflow-y:auto;}
+#adminPage.open{display:block;}
+.ap-nav{position:sticky;top:0;z-index:10;background:rgba(240,244,255,.95);backdrop-filter:blur(18px);border-bottom:1px solid var(--bd);padding:0 1.2rem;display:flex;align-items:center;justify-content:space-between;height:56px;}
+.ap-nav-title{font-family:'Kanit',sans-serif;font-weight:700;font-size:1rem;color:var(--p);display:flex;align-items:center;gap:8px;}
+.ap-exit{background:rgba(255,107,157,.12);color:var(--ac2);border:none;border-radius:9px;padding:7px 14px;font-family:'Sarabun',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;}
+.ap-exit:hover{background:rgba(255,107,157,.25);}
+.ap-tabs{display:flex;gap:.5rem;padding:1.2rem 1.2rem .5rem;max-width:1000px;margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.ap-tabs::-webkit-scrollbar{height:4px;}
+.ap-tabs::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px;}
+.atab{padding:8px 16px;border-radius:99px;border:1.5px solid var(--bd);background:var(--sf);font-family:'Sarabun',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s;color:var(--tm);}
+.atab:hover{border-color:var(--p);color:var(--p);}
+.atab.active{background:linear-gradient(135deg,var(--p),#6e40ff);color:#fff;border-color:transparent;box-shadow:0 3px 12px rgba(59,107,255,.35);}
+.ap-content{max-width:1000px;margin:0 auto;padding:1rem 1.2rem 3rem;}
+.apane{display:none;}.apane.active{display:block;}
+
+/* stats */
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.8rem;margin-bottom:1.5rem;}
+.sc{background:var(--sf);border-radius:14px;padding:1.1rem;border:1px solid var(--bd);text-align:center;}
+.sn{font-family:'Kanit',sans-serif;font-size:1.8rem;font-weight:700;color:var(--p);}
+.sl{font-size:.73rem;color:var(--tm);margin-top:2px;}
+.pbox{background:var(--sf);border-radius:14px;border:1px solid var(--bd);padding:1.2rem;}
+.pbt{font-family:'Kanit',sans-serif;font-weight:700;margin-bottom:.8rem;}
+
+/* inbox */
+.ilist{display:flex;flex-direction:column;gap:.7rem;}
+.ii{background:var(--sf);border-radius:12px;border:1px solid var(--bd);padding:1rem 1.1rem;}
+.itop{display:flex;align-items:center;gap:7px;margin-bottom:4px;flex-wrap:wrap;}
+.icat{font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:99px;background:rgba(59,107,255,.1);color:var(--p);}
+.iurg{background:rgba(255,107,157,.12)!important;color:var(--ac2)!important;}
+.iwho{font-size:.73rem;color:var(--tm);}
+.itime{font-size:.67rem;color:var(--tm);margin-left:auto;}
+.imsg{font-size:.83rem;line-height:1.6;}
+.iimg{max-height:75px;border-radius:7px;margin-top:.4rem;cursor:pointer;}
+.npill{font-size:.63rem;font-weight:700;padding:2px 6px;border-radius:99px;background:var(--ac2);color:#fff;margin-left:4px;}
+
+/* admin list items */
+.alist{display:flex;flex-direction:column;gap:.6rem;}
+.ai{background:var(--sf);border-radius:12px;border:1px solid var(--bd);padding:.9rem 1.1rem;display:flex;align-items:center;gap:.8rem;}
+.ai-th{width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0;}
+.ai-ple{width:48px;height:48px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+.ai-av{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+.ai-av-p{width:48px;height:48px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+.ai-inf{flex:1;min-width:0;}
+.ai-n{font-family:'Kanit',sans-serif;font-size:.87rem;font-weight:600;}
+.ai-s{font-size:.71rem;color:var(--tm);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ai-acts{display:flex;gap:4px;flex-shrink:0;}
+.pb{padding:5px 10px;border-radius:7px;font-size:.7rem;font-weight:600;font-family:'Sarabun',sans-serif;cursor:pointer;border:none;}
+.pbe{background:rgba(59,107,255,.1);color:var(--p);}.pbe:hover{background:rgba(59,107,255,.2);}
+.pbd{background:rgba(255,107,157,.1);color:var(--ac2);}.pbd:hover{background:rgba(255,107,157,.22);}
+.ahead{display:flex;justify-content:flex-end;margin-bottom:.8rem;}
+.btn-add{background:linear-gradient(135deg,var(--p),#6e40ff);color:#fff;border:none;border-radius:9px;padding:8px 16px;font-size:.82rem;font-weight:600;font-family:'Sarabun',sans-serif;cursor:pointer;box-shadow:0 2px 10px rgba(59,107,255,.3);}
+
+/* form modal */
+#fmbg{display:none;position:fixed;inset:0;z-index:2000;background:rgba(10,14,35,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem;}
+#fmbg.open{display:flex;}
+.fmbox{background:var(--sf);border-radius:var(--r);padding:1.6rem;width:min(480px,96vw);max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(10,14,35,.25);animation:mIn .25s cubic-bezier(.16,1,.3,1);}
+.fmbox h3{font-family:'Kanit',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:1.1rem;}
+.fmacts{display:flex;gap:7px;justify-content:flex-end;margin-top:1.1rem;}
+.btn-cx{background:var(--s2);border:1px solid var(--bd);color:var(--tm);border-radius:8px;padding:8px 14px;font-size:.83rem;font-weight:600;font-family:'Sarabun',sans-serif;cursor:pointer;}
+.btn-sv{background:linear-gradient(135deg,var(--p),#6e40ff);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:.83rem;font-weight:600;font-family:'Sarabun',sans-serif;cursor:pointer;}
+.uparea2{border:2px dashed var(--bd);border-radius:9px;padding:.8rem;text-align:center;cursor:pointer;background:var(--s2);font-size:.78rem;color:var(--tm);}
+.uparea2:hover{border-color:var(--p);}
+.ord{text-align:center;font-size:.72rem;color:var(--tm);margin:.35rem 0;}
+
+/* toast */
+#toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1f3a;color:#fff;border-radius:11px;padding:10px 20px;font-size:.85rem;font-weight:600;z-index:9999;transition:transform .35s cubic-bezier(.16,1,.3,1);pointer-events:none;white-space:nowrap;}
+#toast.show{transform:translateX(-50%) translateY(0);}
+
+/* footer */
+footer{position:relative;z-index:1;border-top:1px solid var(--bd);padding:1.8rem;text-align:center;color:var(--tm);font-size:.8rem;margin-top:2rem;}
+footer span{color:var(--p);font-weight:600;}
+
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;text-align:center;padding-top:2rem;}
+  .hero-vis{display:none;}
+  .hero-btns{justify-content:center;}
+  .f2{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .ham{display:flex;}
+  .cs{padding:0 .8rem;}
+  .ch{padding:1rem 1.1rem;}
+  .ap-tabs{padding:.8rem .8rem .3rem;}
+  .ap-content{padding:.8rem .8rem 3rem;}
+}
+@media(min-width:769px){
+  .ham{display:none!important;}
+  .mob-menu{display:none!important;}
+}
+</style>
+</head>
+<body>
+<div id="toast"></div>
+<div id="loadingBar"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <a href="#" class="nav-logo"><div class="dot"></div>สภานักเรียน อิบตีดาวิทยา</a>
+    <ul class="nav-links">
+      <li><a onclick="scrollTo2('s-mem')">คณะกรรมการ</a></li>
+      <li><a onclick="scrollTo2('s-news')">ข่าวสาร</a></li>
+      <li><a onclick="scrollTo2('s-proj')">ผลงาน</a></li>
+      <li><a onclick="scrollTo2('s-fb')">ความคิดเห็น</a></li>
+      <li><a class="btn-adm" onclick="openLogin()">⚙ แอดมิน</a></li>
+    </ul>
+    <button class="ham" id="hamBtn" onclick="toggleHam()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-menu" id="mobMenu">
+  <a onclick="mobGo('s-mem')">👥 คณะกรรมการ</a>
+  <a onclick="mobGo('s-news')">📢 ข่าวสาร</a>
+  <a onclick="mobGo('s-proj')">🏆 ผลงาน</a>
+  <a onclick="mobGo('s-fb')">💌 ความคิดเห็น</a>
+  <a class="mob-adm" onclick="mobGo(null)">⚙ แอดมิน</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-tag">ปีการศึกษา 2569</div>
+    <h1>สภานักเรียน<br><span>อิบตีดาวิทยา</span></h1>
+    <p class="hero-desc">ศูนย์กลางข้อมูล ข่าวสาร และการมีส่วนร่วมของนักเรียนทุกคน โปร่งใส เข้าถึงง่าย ทันสมัย</p>
+    <div class="hero-btns">
+      <button class="btn-p" onclick="openSec('s-mem')">ดูคณะกรรมการ</button>
+      <button class="btn-o" onclick="openSec('s-fb')">ส่งความคิดเห็น</button>
+    </div>
+  </div>
+  <div class="hero-vis">
+    <div class="hcard">
+      <img class="hc-av" id="heroImg" src="" style="display:none">
+      <div class="hc-ple" id="heroEmo" style="background:linear-gradient(135deg,#3b6bff,#00d4b4)">👑</div>
+      <h3 id="heroName">ประธานสภา</h3>
+      <p id="heroCls">ชั้น ม.6/1</p>
+      <span class="hc-badge">✦ ประธานสภา</span>
+    </div>
+    <div class="hcard2">
+      <div class="hc2l">สมาชิกทั้งหมด</div>
+      <div class="hc2s" id="heroCount">—</div>
+      <div class="hc2l">คณะกรรมการ</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTIONS -->
+<div class="cs" id="s-mem">
+  <div class="ch" onclick="togSec('s-mem')">
+    <div class="ch-l"><div class="cico ci1">👥</div><div><div class="ct">คณะกรรมการสภานักเรียน</div><div class="csub">ทีมงานพร้อมรับใช้นักเรียนทุกคน</div></div></div>
+    <div class="ch-r"><span class="ccnt" id="cnt-m">— คน</span><span class="carr">▼</span></div>
+  </div>
+  <div class="cbody" id="cb-s-mem"><div class="cbi"><div class="mgrid" id="memGrid"><div class="skeleton" style="height:200px"></div><div class="skeleton" style="height:200px"></div><div class="skeleton" style="height:200px"></div></div></div></div>
+</div>
+<div class="sdiv"><hr></div>
+
+<div class="cs" id="s-news">
+  <div class="ch" onclick="togSec('s-news')">
+    <div class="ch-l"><div class="cico ci2">📢</div><div><div class="ct">ประกาศ / ข่าวสาร</div><div class="csub">อัปเดตล่าสุดจากสภานักเรียน</div></div></div>
+    <div class="ch-r"><span class="ccnt" id="cnt-n">— รายการ</span><span class="carr">▼</span></div>
+  </div>
+  <div class="cbody" id="cb-s-news"><div class="cbi"><div class="ngrid" id="newsGrid"><div class="skeleton" style="height:220px"></div><div class="skeleton" style="height:220px"></div></div></div></div>
+</div>
+<div class="sdiv"><hr></div>
+
+<div class="cs" id="s-proj">
+  <div class="ch" onclick="togSec('s-proj')">
+    <div class="ch-l"><div class="cico ci3">🏆</div><div><div class="ct">ผลงาน / โครงการ</div><div class="csub">สิ่งที่สภานักเรียนทำเพื่อทุกคน</div></div></div>
+    <div class="ch-r"><span class="ccnt" id="cnt-p">— โครงการ</span><span class="carr">▼</span></div>
+  </div>
+  <div class="cbody" id="cb-s-proj"><div class="cbi"><div class="pgrid" id="projGrid"><div class="skeleton" style="height:190px"></div><div class="skeleton" style="height:190px"></div></div></div></div>
+</div>
+<div class="sdiv"><hr></div>
+
+<div class="cs" id="s-fb">
+  <div class="ch" onclick="togSec('s-fb')">
+    <div class="ch-l"><div class="cico ci4">💌</div><div><div class="ct">กล่องรับความคิดเห็น</div><div class="csub">ส่งได้โดยไม่ต้องเปิดเผยตัวตน</div></div></div>
+    <div class="ch-r"><span class="carr">▼</span></div>
+  </div>
+  <div class="cbody" id="cb-s-fb">
+    <div class="cbi">
+      <div class="fwrap">
+        <h3>💌 ส่งความคิดเห็น</h3>
+        <p class="fsub">ทุกข้อเสนอแนะมีคุณค่า สภาฯ จะรับไปพิจารณาอย่างจริงจัง</p>
+        <div id="fbForm">
+          <div class="f2">
+            <div class="fg"><label>ชื่อ (ไม่บังคับ)</label><input type="text" id="fbN" placeholder="ชื่อหรือนามแฝง"></div>
+            <div class="fg"><label>ชั้นเรียน (ไม่บังคับ)</label><input type="text" id="fbC" placeholder="เช่น ม.4/2"></div>
+          </div>
+          <div class="fg"><label>หมวดหมู่</label>
+            <select id="fbCat"><option>📝 ข้อเสนอแนะทั่วไป</option><option>🏫 สิ่งแวดล้อมในโรงเรียน</option><option>🎉 กิจกรรม / โครงการ</option><option>📚 การเรียนการสอน</option><option>🆘 ปัญหาเร่งด่วน</option><option>👏 ชมเชย</option></select>
+          </div>
+          <div class="fg"><label>ความคิดเห็น</label><textarea id="fbMsg" rows="4" placeholder="เขียนได้เลยครับ/ค่ะ..."></textarea></div>
+          <div class="fg">
+            <label>แนบรูปภาพ (ไม่บังคับ)</label>
+            <div class="uparea" onclick="document.getElementById('fbImgF').click()">
+              <div id="fbImgPH">📎 คลิกเพื่อเลือกรูป</div>
+              <img id="fbImgPrev" src="" style="display:none;max-height:90px;border-radius:7px;margin-top:.4rem">
+            </div>
+            <input type="file" id="fbImgF" accept="image/*" style="display:none" onchange="prevFbImg(this)">
+            <div class="ord">— หรือ —</div>
+            <input type="text" id="fbImgUrl" placeholder="วาง URL รูปภาพ" oninput="prevFbUrl(this.value)" style="width:100%;padding:8px 11px;border-radius:9px;border:1.5px solid var(--bd);background:var(--s2);font-family:'Sarabun',sans-serif;font-size:.85rem;outline:none;">
+          </div>
+          <button class="btn-p" style="width:100%" onclick="submitFb()">ส่งความคิดเห็น ✦</button>
+        </div>
+        <div class="fb-ok" id="fbOk"><span style="font-size:2rem;display:block;margin-bottom:8px">✅</span>ขอบคุณมากครับ! ได้รับความคิดเห็นของคุณแล้ว</div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer><p>© 2569 <span>สภานักเรียน อิบตีดาวิทยา</span> · สร้างด้วย ❤️ เพื่อทุกคนในโรงเรียน</p></footer>
+
+<!-- DETAIL MODAL -->
+<div class="dmbg" id="dmBg" onclick="if(event.target===this)closeDM()">
+  <div class="dmbox" id="dmBox"></div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="lmbg" id="lmbg" onclick="if(event.target===this)closeLg()">
+  <div class="lbox">
+    <div class="lk">🔐</div>
+    <h3>เข้าสู่ระบบแอดมิน</h3>
+    <p class="lsub">สำหรับสมาชิกสภานักเรียนเท่านั้น</p>
+    <div class="fg"><label>รหัสผ่าน</label><input type="password" id="lgP" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLg()"></div>
+    <div class="lerr" id="lgE">รหัสผ่านไม่ถูกต้อง</div>
+    <div class="fg" style="margin-top:.5rem">
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-weight:400;font-size:.82rem;">
+        <input type="checkbox" id="remMe" style="width:auto;margin:0;accent-color:var(--p)"> จดจำในเครื่องนี้
+      </label>
+    </div>
+    <button class="btn-p" style="width:100%;margin-top:.7rem" onclick="doLg()">เข้าสู่ระบบ</button>
+    <button class="btn-o2" onclick="closeLg()">ยกเลิก</button>
+  </div>
+</div>
+
+<!-- FORM MODAL -->
+<div id="fmbg" onclick="if(event.target===this)closeFM()">
+  <div class="fmbox">
+    <h3 id="fmTitle">เพิ่ม</h3>
+    <input type="hidden" id="fmType"><input type="hidden" id="fmId">
+    <div id="fmFields"></div>
+    <div class="fmacts">
+      <button class="btn-cx" onclick="closeFM()">ยกเลิก</button>
+      <button class="btn-sv" onclick="saveFM()">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PAGE (fullscreen) -->
+<div id="adminPage">
+  <nav class="ap-nav">
+    <div class="ap-nav-title"><div class="dot"></div>Admin Panel — สภานักเรียน อิบตีดาวิทยา</div>
+    <button class="ap-exit" onclick="closeAdmin()">✕ ออกจากระบบ</button>
+  </nav>
+  <div class="ap-tabs">
+    <button class="atab active" id="atab-d" onclick="swT('d')">📊 ภาพรวม</button>
+    <button class="atab" id="atab-ib" onclick="swT('ib')">💌 ความคิดเห็น <span class="npill" id="ibPill" style="display:none"></span></button>
+    <button class="atab" id="atab-am" onclick="swT('am')">👥 สมาชิก</button>
+    <button class="atab" id="atab-an" onclick="swT('an')">📢 ข่าวสาร</button>
+    <button class="atab" id="atab-ap" onclick="swT('ap')">🏆 ผลงาน</button>
+  </div>
+  <div class="ap-content">
+    <div class="apane active" id="apane-d">
+      <div class="sc-grid" id="dStats"></div>
+      <div class="pbox"><div class="pbt">ความคิดเห็นล่าสุด</div><div id="dRecent"></div></div>
+    </div>
+    <div class="apane" id="apane-ib"><div class="ilist" id="ibList"></div></div>
+    <div class="apane" id="apane-am"><div class="ahead"><button class="btn-add" onclick="openFM('m',null)">+ เพิ่มสมาชิก</button></div><div class="alist" id="amList"></div></div>
+    <div class="apane" id="apane-an"><div class="ahead"><button class="btn-add" onclick="openFM('n',null)">+ เพิ่มข่าว</button></div><div class="alist" id="anList"></div></div>
+    <div class="apane" id="apane-ap"><div class="ahead"><button class="btn-add" onclick="openFM('p',null)">+ เพิ่มโครงการ</button></div><div class="alist" id="apList"></div></div>
+  </div>
+</div>
+
+<!-- FIREBASE -->
+<!-- Firebase compat SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAF-34XXDyzGUmYKbQnTPZOjgIrV7-52OA",
+  authDomain: "dewaniws.firebaseapp.com",
+  projectId: "dewaniws",
+  storageBucket: "dewaniws.firebasestorage.app",
+  messagingSenderId: "222411606027",
+  appId: "1:222411606027:web:fd5d98ae147706133c9f0e"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+/* ── SVG ICONS ── */
+const IG_SVG=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>`;
+const LN_SVG=`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>`;
+
+const PASS='DewanIWS69', SK='sc_auth';
+
+/* ── CACHE ── */
+let cache={members:[],news:[],projects:[],feedbacks:[]};
+
+/* ── LOADING ── */
+let prog=0;
+function setBar(p){prog=p;document.getElementById('loadingBar').style.width=p+'%';if(p>=100)setTimeout(()=>{document.getElementById('loadingBar').style.opacity='0';},400);}
+
+/* ── FIRESTORE HELPERS (compat) ── */
+async function getCol(name){
+  const snap = await db.collection(name).get();
+  return snap.docs.map(d=>({id:d.id,...d.data()}));
+}
+async function saveDoc(colName,id,data){
+  if(id) await db.collection(colName).doc(id).set(data);
+  else await db.collection(colName).add(data);
+}
+async function delDoc(colName,id){await db.collection(colName).doc(id).delete();}
+
+/* ── LOAD ALL DATA ── */
+async function loadAll(){
+  setBar(10);
+  try{
+    const [members,news,projects,feedbacks]=await Promise.all([
+      getCol('members'),getCol('news'),getCol('projects'),getCol('feedbacks')
+    ]);
+    cache={members,news,projects,feedbacks};
+    setBar(80);
+    renderAll();
+    setBar(100);
+  }catch(e){
+    console.error(e);
+    toast('❌ โหลดข้อมูลไม่สำเร็จ: '+e.message);
+    setBar(100);
+  }
+}
+
+/* ── REALTIME LISTENER ── */
+function listenAll(){
+  const cols=['members','news','projects','feedbacks'];
+  cols.forEach(col=>{
+    db.collection(col).onSnapshot(snap=>{
+      cache[col]=snap.docs.map(d=>({id:d.id,...d.data()}));
+      renderAll();
+      updPill();
+    });
+  });
+}
+
+/* ── COLLAPSIBLE ── */
+window.togSec=function(id){
+  const h=document.querySelector('#'+id+' .ch'), b=document.getElementById('cb-'+id);
+  const o=h.classList.toggle('open'); b.classList.toggle('open',o);
+};
+window.openSec=function(id){
+  const h=document.querySelector('#'+id+' .ch'), b=document.getElementById('cb-'+id);
+  h.classList.add('open'); b.classList.add('open');
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+};
+window.scrollTo2=function(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});};
+
+/* ── RENDER ── */
+function renderAll(){renderMem();renderNews();renderProj();updCounts();updHero();}
+
+function renderMem(){
+  const g=document.getElementById('memGrid');
+  if(!cache.members.length){g.innerHTML='<p style="color:var(--tm);text-align:center;padding:2rem;grid-column:1/-1">ยังไม่มีสมาชิก</p>';return;}
+  const sorted=[...cache.members].sort((a,b)=>(a.order||99)-(b.order||99));
+  g.innerHTML=sorted.map(m=>`
+    <div class="mcard" onclick="openDM('m','${m.id}')">
+      ${m.img?`<img class="mav" src="${m.img}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:''}
+      <div class="mav-p" style="background:${m.bg||'linear-gradient(135deg,#3b6bff,#00d4b4)'};display:${m.img?'none':'flex'}">${m.emoji||'🙂'}</div>
+      <div class="mname">${m.name||''}</div>
+      <div class="mrole">${m.role||''}</div>
+      <div class="mcls">${m.cls||''}</div>
+      <div class="mcon">
+        ${m.ig?`<a class="cbtn ig" href="https://instagram.com/${m.ig}" target="_blank" onclick="event.stopPropagation()">${IG_SVG}</a>`:''}
+        ${m.line?`<a class="cbtn ln" href="https://line.me/ti/p/~${m.line}" target="_blank" onclick="event.stopPropagation()">${LN_SVG}</a>`:''}
+        ${!m.ig&&!m.line?'<span style="font-size:.7rem;color:var(--tm)">—</span>':''}
+      </div>
+    </div>`).join('');
+}
+
+function renderNews(){
+  const g=document.getElementById('newsGrid');
+  const tm={event:'te',news:'tn',alert:'ta'}, lm={event:'กิจกรรม',news:'ข่าวสาร',alert:'ประกาศสำคัญ'};
+  if(!cache.news.length){g.innerHTML='<p style="color:var(--tm);text-align:center;padding:2rem;grid-column:1/-1">ยังไม่มีข่าวสาร</p>';return;}
+  const sorted=[...cache.news].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  g.innerHTML=sorted.map(n=>`
+    <div class="ncard" onclick="openDM('n','${n.id}')">
+      <div class="nthumb" style="background:${n.bg||'linear-gradient(135deg,rgba(59,107,255,.08),rgba(0,212,180,.08))'}">
+        ${n.img?`<img src="${n.img}" onerror="this.remove()">`:''}
+        <span class="ne">${n.img?'':n.emoji||'📌'}</span>
+      </div>
+      <div class="nbody">
+        <div class="nmeta"><span class="ntag ${tm[n.type]||'tn'}">${lm[n.type]||n.type||'ข่าวสาร'}</span><span class="ndt">${n.date||''}</span></div>
+        <h3>${n.title||''}</h3><p>${n.desc||''}</p>
+      </div>
+    </div>`).join('');
+}
+
+function renderProj(){
+  const g=document.getElementById('projGrid');
+  if(!cache.projects.length){g.innerHTML='<p style="color:var(--tm);text-align:center;padding:2rem;grid-column:1/-1">ยังไม่มีโครงการ</p>';return;}
+  g.innerHTML=cache.projects.map(p=>`
+    <div class="pcard" onclick="openDM('p','${p.id}')">
+      <div class="pthumb" style="background:linear-gradient(135deg,rgba(59,107,255,.06),rgba(0,212,180,.06))">
+        ${p.img?`<img src="${p.img}" onerror="this.remove()">`:''}
+        <span class="pe">${p.img?'':p.icon||'📌'}</span>
+      </div>
+      <div class="pbody">
+        <h3>${p.name||''}</h3><p>${p.desc||''}</p>
+        <span class="pst ${p.s==='done'?'ps-d':'ps-g'}"><span class="sd"></span>${p.s==='done'?'เสร็จสิ้นแล้ว':'กำลังดำเนินการ'}</span>
+      </div>
+    </div>`).join('');
+}
+
+function updCounts(){
+  document.getElementById('cnt-m').textContent=cache.members.length+' คน';
+  document.getElementById('cnt-n').textContent=cache.news.length+' รายการ';
+  document.getElementById('cnt-p').textContent=cache.projects.length+' โครงการ';
+}
+
+function updHero(){
+  const p=cache.members.find(m=>m.role&&m.role.includes('ประธาน')&&!m.role.includes('รอง'))||cache.members[0];
+  if(!p)return;
+  const img=document.getElementById('heroImg'), emo=document.getElementById('heroEmo');
+  if(p.img){img.src=p.img;img.style.display='block';emo.style.display='none';}
+  else{img.style.display='none';emo.style.display='flex';emo.textContent=p.emoji||'👑';emo.style.background=p.bg||'linear-gradient(135deg,#3b6bff,#00d4b4)';}
+  document.getElementById('heroName').textContent=p.name||'';
+  document.getElementById('heroCls').textContent='ชั้น '+(p.cls||'');
+  document.getElementById('heroCount').textContent=cache.members.length;
+}
+
+/* ── DETAIL MODAL ── */
+window.openDM=function(type,id){
+  const box=document.getElementById('dmBox');
+  const tm={event:'te',news:'tn',alert:'ta'}, lm={event:'กิจกรรม',news:'ข่าวสาร',alert:'ประกาศสำคัญ'};
+  let html='';
+  if(type==='m'){
+    const m=cache.members.find(x=>x.id===id);if(!m)return;
+    html=`<div style="padding:2rem;text-align:center">
+      <button class="dm-close" onclick="closeDM()" style="float:right">✕</button>
+      ${m.img?`<img src="${m.img}" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 1rem;display:block;box-shadow:0 4px 20px rgba(59,107,255,.2)">`:`<div style="width:90px;height:90px;border-radius:50%;background:${m.bg||'linear-gradient(135deg,#3b6bff,#00d4b4)'};margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:2.2rem;box-shadow:0 4px 20px rgba(59,107,255,.2)">${m.emoji||'🙂'}</div>`}
+      <div style="font-family:'Kanit',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:.3rem">${m.name||''}</div>
+      <div style="font-size:.88rem;color:var(--p);font-weight:600;margin-bottom:.4rem">${m.role||''}</div>
+      <div style="display:inline-block;font-size:.76rem;padding:2px 11px;background:var(--s2);border-radius:99px;color:var(--tm);border:1px solid var(--bd);margin-bottom:1.2rem">${m.cls||''}</div>
+      <div style="display:flex;justify-content:center;gap:12px">
+        ${m.ig?`<a class="cbtn ig" href="https://instagram.com/${m.ig}" target="_blank" style="width:42px;height:42px;border-radius:10px">${IG_SVG}</a>`:''}
+        ${m.line?`<a class="cbtn ln" href="https://line.me/ti/p/~${m.line}" target="_blank" style="width:42px;height:42px;border-radius:10px">${LN_SVG}</a>`:''}
+      </div></div>`;
+  }else if(type==='n'){
+    const n=cache.news.find(x=>x.id===id);if(!n)return;
+    html=`${n.img?`<img class="dm-img" src="${n.img}" onerror="this.style.display='none'">`:`<div class="dm-imgph" style="background:${n.bg||'linear-gradient(135deg,rgba(59,107,255,.08),rgba(0,212,180,.08))'}">${n.emoji||'📌'}</div>`}
+      <div class="dm-body">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:.8rem;flex-wrap:wrap">
+          <span class="ntag ${tm[n.type]||'tn'}">${lm[n.type]||n.type}</span>
+          <span style="font-size:.73rem;color:var(--tm)">${n.date||''}</span>
+          <button class="dm-close" onclick="closeDM()">✕</button>
+        </div>
+        <div class="dm-title">${n.title||''}</div>
+        <p class="dm-desc">${n.desc||''}</p>
+      </div>`;
+  }else if(type==='p'){
+    const p=cache.projects.find(x=>x.id===id);if(!p)return;
+    html=`${p.img?`<img class="dm-img" src="${p.img}" onerror="this.style.display='none'">`:`<div class="dm-imgph" style="background:linear-gradient(135deg,rgba(59,107,255,.1),rgba(0,212,180,.1))">${p.icon||'📌'}</div>`}
+      <div class="dm-body">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:.8rem">
+          <span class="pst ${p.s==='done'?'ps-d':'ps-g'}"><span class="sd"></span>${p.s==='done'?'เสร็จสิ้นแล้ว':'กำลังดำเนินการ'}</span>
+          <button class="dm-close" onclick="closeDM()">✕</button>
+        </div>
+        <div class="dm-title">${p.name||''}</div>
+        <p class="dm-desc">${p.desc||''}</p>
+      </div>`;
+  }
+  box.innerHTML=html;
+  document.getElementById('dmBg').classList.add('open');
+};
+window.closeDM=function(){document.getElementById('dmBg').classList.remove('open');};
+
+/* ── FEEDBACK ── */
+let fbImgD='';
+window.prevFbImg=function(inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{fbImgD=e.target.result;showFbP(e.target.result);document.getElementById('fbImgUrl').value='';};
+  r.readAsDataURL(f);
+};
+window.prevFbUrl=function(v){fbImgD=v;if(v)showFbP(v);};
+function showFbP(src){
+  const p=document.getElementById('fbImgPrev');
+  p.src=src;p.style.display='block';
+  document.getElementById('fbImgPH').style.display='none';
+}
+window.submitFb=async function(){
+  const msg=document.getElementById('fbMsg').value.trim();
+  if(!msg){toast('⚠️ กรุณาใส่ความคิดเห็นก่อนส่ง');return;}
+  try{
+    await db.collection('feedbacks').add({
+      name:document.getElementById('fbN').value.trim()||'ไม่ระบุตัวตน',
+      cls:document.getElementById('fbC').value.trim()||'—',
+      cat:document.getElementById('fbCat').value,
+      msg,img:fbImgD,
+      createdAt:Date.now()
+    });
+    document.getElementById('fbForm').style.display='none';
+    document.getElementById('fbOk').style.display='block';
+    toast('✅ ส่งความคิดเห็นแล้ว ขอบคุณ!');
+    setTimeout(()=>{
+      document.getElementById('fbOk').style.display='none';
+      document.getElementById('fbForm').style.display='block';
+      ['fbN','fbC','fbMsg','fbImgUrl'].forEach(i=>document.getElementById(i).value='');
+      fbImgD='';
+      document.getElementById('fbImgPrev').style.display='none';
+      document.getElementById('fbImgPH').style.display='block';
+    },4000);
+  }catch(e){toast('❌ ส่งไม่สำเร็จ: '+e.message);}
+};
+
+/* ── LOGIN ── */
+window.openLogin=function(){
+  if(localStorage.getItem(SK)==='1'){openAdmin();return;}
+  document.getElementById('lmbg').classList.add('open');
+  document.getElementById('lgP').value='';
+  document.getElementById('lgE').style.display='none';
+  setTimeout(()=>document.getElementById('lgP').focus(),80);
+};
+window.closeLg=function(){document.getElementById('lmbg').classList.remove('open');};
+window.doLg=function(){
+  if(document.getElementById('lgP').value===PASS){
+    if(document.getElementById('remMe').checked)localStorage.setItem(SK,'1');
+    closeLg();openAdmin();
+  }else{
+    document.getElementById('lgE').style.display='block';
+    document.getElementById('lgP').value='';
+    document.getElementById('lgP').focus();
+  }
+};
+
+/* ── ADMIN ── */
+function openAdmin(){
+  document.getElementById('adminPage').classList.add('open');
+  document.body.style.overflow='hidden';
+  swT('d');
+}
+window.closeAdmin=function(){
+  document.getElementById('adminPage').classList.remove('open');
+  document.body.style.overflow='';
+  localStorage.removeItem(SK);
+  toast('👋 ออกจากระบบแล้ว');
+};
+
+const TL={d:'📊 ภาพรวม',ib:'💌 ความคิดเห็น',am:'👥 จัดการสมาชิก',an:'📢 จัดการข่าวสาร',ap:'🏆 จัดการผลงาน'};
+window.swT=function(t){
+  ['d','ib','am','an','ap'].forEach(k=>{
+    document.getElementById('atab-'+k).classList.remove('active');
+    document.getElementById('apane-'+k).classList.remove('active');
+  });
+  document.getElementById('atab-'+t).classList.add('active');
+  document.getElementById('apane-'+t).classList.add('active');
+  if(t==='d')rDash();if(t==='ib')rInbox();if(t==='am')rAMem();if(t==='an')rANews();if(t==='ap')rAProj();
+};
+
+function rDash(){
+  const done=cache.projects.filter(p=>p.s==='done').length;
+  document.getElementById('dStats').innerHTML=`
+    <div class="sc"><div class="sn">${cache.members.length}</div><div class="sl">สมาชิกสภา</div></div>
+    <div class="sc"><div class="sn" style="color:var(--ac2)">${cache.feedbacks.length}</div><div class="sl">ความคิดเห็น</div></div>
+    <div class="sc"><div class="sn">${cache.projects.length}</div><div class="sl">โครงการ</div></div>
+    <div class="sc"><div class="sn" style="color:var(--ac)">${done}</div><div class="sl">สำเร็จแล้ว</div></div>`;
+  const el=document.getElementById('dRecent');
+  const sorted=[...cache.feedbacks].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  if(!sorted.length){el.innerHTML='<p style="color:var(--tm);text-align:center;padding:1rem;font-size:.83rem">ยังไม่มีความคิดเห็น</p>';return;}
+  el.innerHTML=sorted.slice(0,3).map(f=>`
+    <div style="padding:.75rem 0;border-bottom:1px solid var(--bd)">
+      <div style="display:flex;gap:6px;align-items:center;margin-bottom:3px;flex-wrap:wrap">
+        <span style="font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:99px;background:rgba(59,107,255,.1);color:var(--p)">${f.cat||''}</span>
+        <span style="font-size:.72rem;color:var(--tm)">${f.name||''}·${f.cls||''}</span>
+        <span style="font-size:.67rem;color:var(--tm);margin-left:auto">${f.createdAt?new Date(f.createdAt).toLocaleString('th-TH',{dateStyle:'short',timeStyle:'short'}):''}</span>
+      </div>
+      <p style="font-size:.82rem;line-height:1.6">${f.msg||''}</p>
+    </div>`).join('');
+}
+
+function rInbox(){
+  const el=document.getElementById('ibList');
+  const sorted=[...cache.feedbacks].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  if(!sorted.length){el.innerHTML='<div style="text-align:center;padding:2.5rem;color:var(--tm)">📭 ยังไม่มีความคิดเห็น</div>';return;}
+  el.innerHTML=sorted.map(f=>`
+    <div class="ii">
+      <div class="itop">
+        <span class="icat ${(f.cat||'').includes('เร่งด่วน')?'iurg':''}">${f.cat||''}</span>
+        <span class="iwho">👤${f.name||''}·${f.cls||''}</span>
+        <span class="itime">${f.createdAt?new Date(f.createdAt).toLocaleString('th-TH',{dateStyle:'short',timeStyle:'short'}):''}</span>
+      </div>
+      <p class="imsg">${f.msg||''}</p>
+      ${f.img?'<img src="'+f.img+'" class="iimg" onclick="window.showBigImg(\''+f.img+'\')">':''}
+    </div>`).join('');
+}
+
+function rAMem(){
+  const el=document.getElementById('amList');
+  if(!cache.members.length){el.innerHTML='<p style="text-align:center;color:var(--tm);padding:2rem">ยังไม่มีสมาชิก</p>';return;}
+  const sorted=[...cache.members].sort((a,b)=>(a.order||99)-(b.order||99));
+  el.innerHTML=sorted.map(m=>`
+    <div class="ai">
+      ${m.img?`<img class="ai-av" src="${m.img}" onerror="this.style.display='none';this.nextSibling.style.display='flex'">`:''}
+      <div class="ai-av-p" style="background:${m.bg||'linear-gradient(135deg,#3b6bff,#00d4b4)'};display:${m.img?'none':'flex'}">${m.emoji||'🙂'}</div>
+      <div class="ai-inf"><div class="ai-n">${m.name||''}</div><div class="ai-s">${m.role||''}·${m.cls||''}</div></div>
+      <div class="ai-acts">
+        <button class="pb pbe" onclick="window.openFM('m','${m.id}')">✏️</button>
+        <button class="pb pbd" onclick="window.delI('members','${m.id}')">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+function rANews(){
+  const el=document.getElementById('anList');
+  const lm={event:'กิจกรรม',news:'ข่าวสาร',alert:'ประกาศสำคัญ'};
+  if(!cache.news.length){el.innerHTML='<p style="text-align:center;color:var(--tm);padding:2rem">ยังไม่มีข่าว</p>';return;}
+  el.innerHTML=cache.news.map(n=>`
+    <div class="ai">
+      ${n.img?`<img class="ai-th" src="${n.img}" onerror="this.style.display='none'">`:`<div class="ai-ple" style="background:linear-gradient(135deg,rgba(255,107,157,.15),rgba(255,159,67,.15))">${n.emoji||'📌'}</div>`}
+      <div class="ai-inf"><div class="ai-n">${n.title||''}</div><div class="ai-s">${lm[n.type]||n.type||''}·${n.date||''}</div></div>
+      <div class="ai-acts">
+        <button class="pb pbe" onclick="window.openFM('n','${n.id}')">✏️</button>
+        <button class="pb pbd" onclick="window.delI('news','${n.id}')">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+function rAProj(){
+  const el=document.getElementById('apList');
+  if(!cache.projects.length){el.innerHTML='<p style="text-align:center;color:var(--tm);padding:2rem">ยังไม่มีโครงการ</p>';return;}
+  el.innerHTML=cache.projects.map(p=>`
+    <div class="ai">
+      ${p.img?`<img class="ai-th" src="${p.img}" onerror="this.style.display='none'">`:`<div class="ai-ple" style="background:linear-gradient(135deg,rgba(0,212,180,.15),rgba(0,184,148,.15))">${p.icon||'📌'}</div>`}
+      <div class="ai-inf"><div class="ai-n">${p.name||''}</div><div class="ai-s">${(p.desc||'').substring(0,45)}${(p.desc||'').length>45?'...':''}</div></div>
+      <div class="ai-acts">
+        <button class="pb pbe" onclick="window.openFM('p','${p.id}')">✏️</button>
+        <button class="pb pbd" onclick="window.delI('projects','${p.id}')">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ── FORM MODAL ── */
+function imgFieldHTML(cur,fid){
+  return `<div class="fg"><label>รูปภาพ</label>
+    <div class="uparea2" onclick="document.getElementById('${fid}F').click()" id="${fid}Area">
+      ${cur?`<img src="${cur}" style="max-height:85px;max-width:100%;border-radius:7px">`:'📎 คลิกเพื่ออัปโหลด'}
+    </div>
+    <input type="file" id="${fid}F" accept="image/*" style="display:none" onchange="window.fmUp(this,'${fid}')">
+    <div class="ord">— หรือวาง URL —</div>
+    <input type="text" id="${fid}Url" value="${cur&&!cur.startsWith('data:')?cur:''}" placeholder="URL รูปภาพ" oninput="window.fmUrl(this.value,'${fid}')"
+      style="width:100%;padding:8px 11px;border-radius:9px;border:1.5px solid var(--bd);background:var(--s2);font-family:'Sarabun',sans-serif;font-size:.84rem;outline:none">
+    <input type="hidden" id="${fid}D" value="${cur||''}">
+  </div>`;
+}
+window.fmUp=function(inp,fid){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{document.getElementById(fid+'D').value=e.target.result;document.getElementById(fid+'Area').innerHTML=`<img src="${e.target.result}" style="max-height:85px;max-width:100%;border-radius:7px">`;document.getElementById(fid+'Url').value='';};
+  r.readAsDataURL(f);
+};
+window.fmUrl=function(v,fid){
+  document.getElementById(fid+'D').value=v;
+  if(v)document.getElementById(fid+'Area').innerHTML=`<img src="${v}" style="max-height:85px;max-width:100%;border-radius:7px" onerror="this.parentElement.innerHTML='❌ URL ไม่ถูกต้อง'">`;
+};
+
+window.openFM=function(type,id){
+  document.getElementById('fmType').value=type;
+  document.getElementById('fmId').value=id||'';
+  const T={m:'สมาชิก',n:'ข่าวสาร',p:'โครงการ'};
+  document.getElementById('fmTitle').textContent=(id?'แก้ไข':'เพิ่ม')+T[type];
+  let html='';
+  if(type==='m'){
+    const m=id?cache.members.find(x=>x.id===id):{};
+    html=`${imgFieldHTML(m.img||'','mI')}
+      <div class="fg"><label>Emoji (เมื่อไม่มีรูป)</label><input id="mEmo" type="text" maxlength="4" value="${m.emoji||'🙂'}" placeholder="🙂"></div>
+      <div class="fg"><label>ชื่อ-นามสกุล *</label><input id="mNm" type="text" value="${m.name||''}" placeholder="นาย/น.ส. ..."></div>
+      <div class="fg"><label>ตำแหน่ง</label><input id="mRl" type="text" value="${m.role||''}" placeholder="ประธานสภา..."></div>
+      <div class="fg"><label>ชั้นเรียน</label><input id="mCl" type="text" value="${m.cls||''}" placeholder="ม.6/1"></div>
+      <div class="fg"><label>Instagram (username ไม่ต้องมี @)</label><input id="mIg" type="text" value="${m.ig||''}" placeholder="username"></div>
+      <div class="fg"><label>Line ID</label><input id="mLn" type="text" value="${m.line||''}" placeholder="LineID"></div>
+      <div class="fg"><label>ลำดับ (น้อย = อยู่หน้า)</label><input id="mOrd" type="number" value="${m.order||99}" placeholder="1"></div>
+      <div class="fg"><label>สีพื้นหลัง Emoji (CSS gradient)</label><input id="mBg" type="text" value="${m.bg||'linear-gradient(135deg,#3b6bff,#00d4b4)'}" placeholder="linear-gradient(...)"></div>`;
+  }else if(type==='n'){
+    const n=id?cache.news.find(x=>x.id===id):{};
+    html=`${imgFieldHTML(n.img||'','nI')}
+      <div class="fg"><label>Emoji (เมื่อไม่มีรูป)</label><input id="nEmo" type="text" maxlength="4" value="${n.emoji||'📌'}" placeholder="📌"></div>
+      <div class="fg"><label>ประเภท</label><select id="nTy"><option value="event" ${n.type==='event'?'selected':''}>กิจกรรม</option><option value="news" ${n.type==='news'?'selected':''}>ข่าวสาร</option><option value="alert" ${n.type==='alert'?'selected':''}>ประกาศสำคัญ</option></select></div>
+      <div class="fg"><label>หัวข้อ *</label><input id="nTi" type="text" value="${n.title||''}" placeholder="หัวข้อข่าว"></div>
+      <div class="fg"><label>รายละเอียด</label><textarea id="nDs" rows="3" placeholder="รายละเอียด...">${n.desc||''}</textarea></div>
+      <div class="fg"><label>วันที่</label><input id="nDt" type="text" value="${n.date||''}" placeholder="15 มี.ค. 2569"></div>`;
+  }else if(type==='p'){
+    const p=id?cache.projects.find(x=>x.id===id):{};
+    html=`${imgFieldHTML(p.img||'','pI')}
+      <div class="fg"><label>Icon Emoji (เมื่อไม่มีรูป)</label><input id="pIco" type="text" maxlength="4" value="${p.icon||'📌'}" placeholder="📌"></div>
+      <div class="fg"><label>ชื่อโครงการ *</label><input id="pNm" type="text" value="${p.name||''}" placeholder="ชื่อโครงการ"></div>
+      <div class="fg"><label>คำอธิบาย</label><textarea id="pDs" rows="3" placeholder="รายละเอียด...">${p.desc||''}</textarea></div>
+      <div class="fg"><label>สถานะ</label><select id="pSt"><option value="done" ${(!p.s||p.s==='done')?'selected':''}>✅ เสร็จสิ้นแล้ว</option><option value="ongoing" ${p.s==='ongoing'?'selected':''}>🔄 กำลังดำเนินการ</option></select></div>`;
+  }
+  document.getElementById('fmFields').innerHTML=html;
+  document.getElementById('fmbg').classList.add('open');
+};
+window.closeFM=function(){document.getElementById('fmbg').classList.remove('open');};
+
+window.saveFM=async function(){
+  const type=document.getElementById('fmType').value;
+  const eid=document.getElementById('fmId').value;
+  let colName='',data={};
+  if(type==='m'){
+    const name=document.getElementById('mNm').value.trim();
+    if(!name){toast('⚠️ กรุณาใส่ชื่อ');return;}
+    colName='members';
+    data={img:document.getElementById('mID').value,emoji:document.getElementById('mEmo').value.trim()||'🙂',name,role:document.getElementById('mRl').value.trim(),cls:document.getElementById('mCl').value.trim(),ig:document.getElementById('mIg').value.trim(),line:document.getElementById('mLn').value.trim(),order:parseInt(document.getElementById('mOrd').value)||99,bg:document.getElementById('mBg').value.trim()||'linear-gradient(135deg,#3b6bff,#00d4b4)'};
+  }else if(type==='n'){
+    const title=document.getElementById('nTi').value.trim();
+    if(!title){toast('⚠️ กรุณาใส่หัวข้อ');return;}
+    colName='news';
+    data={img:document.getElementById('nID').value,emoji:document.getElementById('nEmo').value.trim()||'📌',type:document.getElementById('nTy').value,title,desc:document.getElementById('nDs').value.trim(),date:document.getElementById('nDt').value.trim(),bg:'linear-gradient(135deg,rgba(59,107,255,.08),rgba(0,212,180,.08))',createdAt:eid?(cache.news.find(x=>x.id===eid)||{}).createdAt||Date.now():Date.now()};
+  }else if(type==='p'){
+    const name=document.getElementById('pNm').value.trim();
+    if(!name){toast('⚠️ กรุณาใส่ชื่อโครงการ');return;}
+    colName='projects';
+    data={img:document.getElementById('pID').value,icon:document.getElementById('pIco').value.trim()||'📌',name,desc:document.getElementById('pDs').value.trim(),s:document.getElementById('pSt').value};
+  }
+  try{
+    await saveDoc(colName,eid||null,data);
+    closeFM();
+    toast('✅ บันทึกแล้ว');
+  }catch(e){toast('❌ บันทึกไม่สำเร็จ: '+e.message);}
+};
+
+window.delI=async function(colName,id){
+  if(!confirm('ยืนยันการลบ?'))return;
+  try{
+    await delDoc(colName,id);
+    toast('🗑 ลบแล้ว');
+  }catch(e){toast('❌ ลบไม่สำเร็จ: '+e.message);}
+};
+
+/* ── PILL ── */
+function updPill(){
+  const p=document.getElementById('ibPill');
+  p.textContent=cache.feedbacks.length;
+  p.style.display=cache.feedbacks.length?'inline':'none';
+}
+
+/* ── BIG IMG ── */
+window.showBigImg=function(src){
+  const box=document.getElementById('dmBox');
+  box.innerHTML=`<button class="dm-close" onclick="closeDM()" style="margin:1rem 1rem 0 auto;display:flex">✕</button><img src="${src}" style="width:100%;max-height:70vh;object-fit:contain;border-radius:0 0 var(--r) var(--r)">`;
+  document.getElementById('dmBg').classList.add('open');
+};
+
+/* ── HAMBURGER ── */
+window.toggleHam=function(){
+  document.getElementById('hamBtn').classList.toggle('open');
+  document.getElementById('mobMenu').classList.toggle('open');
+};
+function closeHam(){document.getElementById('hamBtn').classList.remove('open');document.getElementById('mobMenu').classList.remove('open');}
+window.mobGo=function(id){
+  closeHam();
+  if(id===null){openLogin();return;}
+  setTimeout(()=>window.openSec(id),200);
+};
+document.addEventListener('click',e=>{
+  const m=document.getElementById('mobMenu'), b=document.getElementById('hamBtn');
+  if(m.classList.contains('open')&&!m.contains(e.target)&&!b.contains(e.target))closeHam();
+});
+
+/* ── TOAST ── */
+let tt;
+window.toast=function(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>el.classList.remove('show'),2800);};
+function toast(msg){window.toast(msg);}
+
+/* ── ESCAPE KEY ── */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeLg();window.closeFM();window.closeDM();closeHam();}
+});
+
+/* ── INIT ── */
+loadAll().then(()=>listenAll());
+
+// auto-login if remembered
+if(localStorage.getItem(SK)==='1'){
+  document.querySelector('.btn-adm').textContent='⚙ แอดมิน ✓';
+}
+</script>
+</body>
+</html>
